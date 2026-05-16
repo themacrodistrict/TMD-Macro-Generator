@@ -78,6 +78,11 @@ button{background:#d6b887;color:#111;font-weight:900}
   filter:drop-shadow(0 0 6px rgba(214,184,135,.35));
 }
 
+.youtube{
+  width:24px;
+  height:24px;
+}
+
 .handle{font-size:28px;opacity:.8;margin-left:6px}
 </style>
 </head>
@@ -129,13 +134,8 @@ function fitTitle(){
 }
 
 function cleanFilename(name){
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/ä/g,"ae")
-    .replace(/ö/g,"oe")
-    .replace(/ü/g,"ue")
-    .replace(/ß/g,"ss")
+  return name.toLowerCase().trim()
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
     .replace(/[^a-z0-9]+/g,"-")
     .replace(/^-+|-+$/g,"");
 }
@@ -178,7 +178,7 @@ function render(){
       <div class="footer-inner">
         <svg class="icon" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
         <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v10.2a3.8 3.8 0 11-3-3.7v2.1a1.7 1.7 0 102 1.6V3h1z"/></svg>
-        <svg class="icon" viewBox="0 0 24 24"><path d="M10 14.5v-5l5 2.5-5 2.5z"/></svg>
+        <svg class="icon youtube" viewBox="0 0 24 24"><path d="M21.6 7.2c-.2-.8-.8-1.4-1.6-1.6C18.6 5.2 12 5.2 12 5.2s-6.6 0-8 .4c-.8.2-1.4.8-1.6 1.6C2 8.6 2 12 2 12s0 3.4.4 4.8c.2.8.8 1.4 1.6 1.6 1.4.4 8 .4 8 .4s6.6 0 8-.4c.8-.2 1.4-.8 1.6-1.6.4-1.4.4-4.8.4-4.8s0-3.4-.4-4.8zM10 15.2V8.8l5.5 3.2L10 15.2z"/></svg>
         <span class="handle">@TheMacroDistrict</span>
       </div>
     </div>
@@ -191,6 +191,9 @@ function render(){
 function download(){
   render();
 
+  const recipeName = v("name") || "tmd-card";
+  const filename = cleanFilename(recipeName) + ".png";
+
   const clone = $("card").cloneNode(true);
   clone.style.transform = "none";
   clone.style.width = "1080px";
@@ -202,12 +205,9 @@ function download(){
 
   html2canvas(clone,{scale:2,useCORS:true}).then(canvas=>{
     const link=document.createElement("a");
-    const filename = v("name") ? cleanFilename(v("name")) + ".png" : "tmd-card.png";
-
     link.download = filename;
     link.href = canvas.toDataURL("image/png");
     link.click();
-
     document.body.removeChild(clone);
   });
 }
