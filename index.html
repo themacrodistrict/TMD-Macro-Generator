@@ -60,18 +60,17 @@ button{
     #080808;
 }
 
-/* 🔥 WATERMARK FINAL */
+/* 🔥 FINAL WATERMARK */
 .watermark{
   position:absolute;
-  width:950px;
-  opacity:.09;
-  top:65%;
+  width:1030px;
+  opacity:.095;
+  top:66%;
   left:50%;
   transform:translate(-50%,-50%);
   z-index:0;
   pointer-events:none;
-
-  filter:brightness(1.1);
+  filter:brightness(1.12);
 }
 
 /* CONTENT */
@@ -126,44 +125,43 @@ button{
 .kcal{
   font-size:140px;
   font-weight:1000;
-  line-height:1;
 }
 
 .kcal-label{
   font-size:42px;
   font-weight:950;
-  margin-top:8px;
 }
 
 .portion{
   font-size:24px;
   font-weight:800;
   margin-top:10px;
-  opacity:.68;
+  opacity:.7;
 }
 
+/* 🔥 IMPROVED MACROS */
 .macros{
-  margin-top:95px;
+  margin-top:75px;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
-  gap:20px;
+  gap:22px;
 }
 
 .macro{
   background:#151515;
   border:2px solid #3d3024;
   border-radius:999px;
-  padding:26px;
+  padding:30px 26px;
 }
 
 .label{
-  font-size:20px;
+  font-size:22px;
   font-weight:900;
   color:#d6b887;
 }
 
 .value{
-  font-size:42px;
+  font-size:48px;
   font-weight:1000;
   margin-top:6px;
 }
@@ -183,9 +181,7 @@ button{
 .footer-inner{
   display:flex;
   align-items:center;
-  justify-content:center;
   gap:14px;
-  transform:translateX(-4px);
 }
 
 .icon{
@@ -193,7 +189,6 @@ button{
   height:23px;
   fill:#d6b887;
   opacity:.8;
-  filter:drop-shadow(0 0 8px rgba(214,184,135,.4));
 }
 
 .youtube{
@@ -211,14 +206,8 @@ button{
 
 <body>
 
-<select id="format">
-<option value="card">Nährwerte Card</option>
-<option value="reel">Reel Cover</option>
-</select>
-
 <input id="hook" placeholder="Hook">
 <input id="name" placeholder="Name">
-<input id="subtitle" placeholder="Untertitel">
 <input id="kcal" placeholder="Kalorien">
 <input id="portion" placeholder="z.B. pro Portion">
 <input id="protein" placeholder="Protein">
@@ -238,33 +227,14 @@ button{
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
-function resizePreview(){
-  const scale = Math.min(
-    (window.innerWidth-40)/1080,
-    (window.innerHeight-40)/1920,
-    0.55
-  );
-  const el = $("previewInner");
-  el.style.transform = `scale(${scale})`;
-  el.style.width = `${1080*scale}px`;
-  el.style.height = `${1920*scale}px`;
-}
-
 function cleanFilename(name){
-  return name.toLowerCase().trim()
-    .replace(/ä/g,"ae")
-    .replace(/ö/g,"oe")
-    .replace(/ü/g,"ue")
-    .replace(/ß/g,"ss")
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-+|-+$/g,"");
+  return name.toLowerCase().replace(/[^a-z0-9]+/g,"-");
 }
 
 function render(){
 
   const hook = v("hook") ? `<div class="hook">${v("hook")}</div>` : "";
   const title = v("name") ? `<div class="title">${v("name")}</div>` : "";
-  const subtitle = v("subtitle") ? `<div class="subtitle">${v("subtitle")}</div>` : "";
 
   const kcalBox = v("kcal") ? `
     <div class="kcal-badge">
@@ -288,7 +258,6 @@ function render(){
     <div class="content">
       ${hook}
       ${title}
-      ${subtitle}
       ${kcalBox}
       ${macros}
     </div>
@@ -296,19 +265,16 @@ function render(){
     <div class="footer">
       <div class="footer-inner">
 
-        <!-- Instagram -->
         <svg class="icon" viewBox="0 0 24 24">
           <rect x="4" y="4" width="16" height="16" rx="5"/>
           <circle cx="12" cy="12" r="4" fill="#080808"/>
           <circle cx="17" cy="7" r="1.5" fill="#080808"/>
         </svg>
 
-        <!-- TikTok -->
         <svg class="icon" viewBox="0 0 24 24">
           <path d="M14 3v9a4 4 0 11-3-3.87V10a2 2 0 102 1.73V3h1z"/>
         </svg>
 
-        <!-- YouTube -->
         <svg class="icon youtube" viewBox="0 0 24 24">
           <rect x="2" y="6" width="20" height="12" rx="4" fill="#d6b887"/>
           <polygon points="10,9 16,12 10,15" fill="#080808"/>
@@ -319,35 +285,21 @@ function render(){
       </div>
     </div>
   `;
-
-  resizePreview();
 }
 
 function download(){
   render();
 
-  const recipeName = v("name") || "tmd-card";
-  const filename = cleanFilename(recipeName) + ".png";
+  const filename = cleanFilename(v("name") || "tmd") + ".png";
 
-  const clone = $("card").cloneNode(true);
-  clone.style.transform = "none";
-  clone.style.width = "1080px";
-  clone.style.height = "1920px";
-  clone.style.position = "fixed";
-  clone.style.left = "-9999px";
-
-  document.body.appendChild(clone);
-
-  html2canvas(clone,{scale:2,useCORS:true}).then(canvas=>{
+  html2canvas($("card"),{scale:2}).then(canvas=>{
     const link=document.createElement("a");
     link.download = filename;
-    link.href = canvas.toDataURL("image/png");
+    link.href = canvas.toDataURL();
     link.click();
-    document.body.removeChild(clone);
   });
 }
 
-window.addEventListener("resize",resizePreview);
 render();
 </script>
 
