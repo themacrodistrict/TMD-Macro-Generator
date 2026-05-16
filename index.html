@@ -152,12 +152,34 @@ function render(){
 }
 
 function download(){
+
   render();
-  html2canvas($("card"),{scale:2,useCORS:true}).then(canvas=>{
-    const a=document.createElement("a");
-    a.download="tmd-card.png";
-    a.href=canvas.toDataURL("image/png");
-    a.click();
+
+  const original = $("card");
+
+  // 🔥 CLONE OHNE SCALE
+  const clone = original.cloneNode(true);
+  clone.style.transform = "none";
+  clone.style.width = "1080px";
+  clone.style.height = "1920px";
+
+  clone.style.position = "fixed";
+  clone.style.left = "-9999px";
+  clone.style.top = "0";
+
+  document.body.appendChild(clone);
+
+  html2canvas(clone, {
+    scale:2,
+    useCORS:true,
+    backgroundColor:null
+  }).then(canvas=>{
+    const link = document.createElement("a");
+    link.download = "tmd.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+
+    document.body.removeChild(clone); // cleanup
   });
 }
 
