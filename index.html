@@ -43,14 +43,23 @@ button{background:#d6b887;color:#111;font-weight:900}
 
 .kcal-wrap{position:relative;margin-top:90px}
 
-.kcal-wrap::before{
-  content:"";position:absolute;width:760px;height:760px;border-radius:50%;
-  background:radial-gradient(circle,rgba(214,184,135,.32) 0%,rgba(214,184,135,.12) 38%,transparent 70%);
-  left:50%;top:50%;transform:translate(-50%,-50%);z-index:-1;
+.kcal-glow{
+  position:absolute;width:760px;height:760px;border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(214,184,135,.34) 0%,
+    rgba(214,184,135,.18) 35%,
+    rgba(214,184,135,.06) 58%,
+    transparent 72%
+  );
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  z-index:0;
+  pointer-events:none;
 }
 
 .kcal-badge{
-  margin:0 auto;width:560px;height:560px;border-radius:50%;
+  position:relative;z-index:1;
+  margin:0 auto;width:540px;height:540px;border-radius:50%;
   background:#d6b887;color:#111;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   box-shadow:0 0 140px rgba(214,184,135,.6);
@@ -132,6 +141,7 @@ function render(){
 
   const kcalBox = v("kcal") ? `
     <div class="kcal-wrap">
+      <div class="kcal-glow"></div>
       <div class="kcal-badge">
         <div class="kcal">${v("kcal")}</div>
         <div class="kcal-label">KCAL</div>
