@@ -61,26 +61,14 @@ button{
     #080808;
 }
 
-/* 🔥 WATERMARK CLEAN */
+/* 🔥 WATERMARK */
 .watermark{
   position:absolute;
-  width:900px;
-  opacity:.07;
-  top:50%;
+  width:950px;
+  opacity:.08;
+  top:65%;
   left:50%;
-  transform:translate(-50%,-50%);
-  z-index:0;
-  pointer-events:none;
-}
-
-.watermark-glow{
-  position:absolute;
-  width:1100px;
-  opacity:.035;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(1.2);
-  filter:blur(40px);
+  transform:translate(-50%, -50%);
   z-index:0;
   pointer-events:none;
 }
@@ -170,14 +158,26 @@ button{
   margin-top:6px;
 }
 
+/* 🔥 FOOTER */
 .footer{
   position:absolute;
   bottom:70px;
   width:100%;
-  text-align:center;
-  font-size:30px;
-  opacity:.7;
-  z-index:2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  font-size:28px;
+  opacity:.75;
+}
+
+/* 🔥 GOLD ICONS */
+.icon{
+  width:22px;
+  height:22px;
+  fill:#d6b887;
+  opacity:.8;
+  filter:drop-shadow(0 0 6px rgba(214,184,135,.35));
 }
 </style>
 </head>
@@ -210,7 +210,7 @@ button{
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
-/* RESPONSIVE PREVIEW */
+/* PREVIEW SCALE */
 function resizePreview(){
   const scale = Math.min(
     (window.innerWidth - 40) / 1080,
@@ -239,7 +239,6 @@ function render(){
   const format = v("format");
 
   $("card").innerHTML = `
-    <img src="watermark.png" class="watermark-glow">
     <img src="watermark.png" class="watermark">
 
     <div class="content">
@@ -270,7 +269,35 @@ function render(){
       }
     </div>
 
-    <div class="footer">@TheMacroDistrict</div>
+    <div class="footer">
+
+      <!-- Instagram -->
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 
+        5-5V7c0-2.8-2.2-5-5-5H7zm5 5a5 5 0 110 10 5 5 0 010-10zm6.5-.8a1.2 
+        1.2 0 110 2.4 1.2 1.2 0 010-2.4zM12 9a3 3 0 100 6 3 3 0 000-6z"/>
+      </svg>
+
+      <!-- TikTok -->
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M14 3v10.2a3.8 3.8 0 11-3-3.7v2.1a1.7 1.7 0 102 
+        1.6V3h1z"/>
+      </svg>
+
+      <!-- YouTube -->
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M23 7s-.2-1.7-.8-2.4c-.8-.9-1.7-.9-2.1-1C17.2 
+        3 12 3 12 3h0s-5.2 0-8.1.2c-.4.1-1.3.1-2.1 1C1.2 
+        5.3 1 7 1 7S1 8.8 1 10.6v1.8C1 14.2 1 
+        16 1 16s.2 1.7.8 2.4c.8.9 1.9.9 2.4 
+        1 1.8.2 7.8.2 7.8.2s5.2 0 8.1-.2c.4-.1 
+        1.3-.1 2.1-1 .6-.7.8-2.4.8-2.4s0-1.8 
+        0-3.6v-1.8C23 8.8 23 7 23 7zM10 
+        14.5v-5l5 2.5-5 2.5z"/>
+      </svg>
+
+      <span>@TheMacroDistrict</span>
+    </div>
   `;
 
   fitTitle();
@@ -290,14 +317,10 @@ function download(){
 
   document.body.appendChild(clone);
 
-  html2canvas(clone,{
-    scale:2,
-    useCORS:true,
-    backgroundColor:null
-  }).then(canvas=>{
+  html2canvas(clone,{scale:2}).then(canvas=>{
     const link=document.createElement("a");
-    link.download="tmd-card.png";
-    link.href=canvas.toDataURL("image/png");
+    link.download="tmd.png";
+    link.href=canvas.toDataURL();
     link.click();
     document.body.removeChild(clone);
   });
