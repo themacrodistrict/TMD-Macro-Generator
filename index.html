@@ -4,73 +4,175 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TMD Generator</title>
+
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
-body{margin:0;background:#080808;color:white;font-family:-apple-system,Arial;padding:18px}
-input,select,button{width:100%;box-sizing:border-box;padding:14px;margin:7px 0;border-radius:14px;border:0;font-size:16px}
-button{background:#d6b887;color:#111;font-weight:900}
+body{
+  margin:0;
+  background:#080808;
+  color:white;
+  font-family:-apple-system,Arial;
+  padding:18px;
+}
 
-.preview{width:100%;display:flex;justify-content:center;overflow:hidden;margin-top:20px}
-.preview-inner{width:1080px;height:1920px;transform-origin:top left}
+input,select,button{
+  width:100%;
+  padding:14px;
+  margin:7px 0;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
+}
 
+button{
+  background:#d6b887;
+  color:#111;
+  font-weight:900;
+}
+
+/* PREVIEW */
+.preview{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+  margin-top:20px;
+}
+
+.preview-inner{
+  width:1080px;
+  height:1920px;
+  transform-origin:top left;
+}
+
+/* CARD */
 .card{
-  width:1080px;height:1920px;position:relative;overflow:hidden;
-  box-sizing:border-box;padding:90px 70px;background:#080808;
-  background:radial-gradient(circle at top,#4a3520 0%,transparent 38%),#080808;
+  width:1080px;
+  height:1920px;
+  position:relative;
+  overflow:hidden;
+  padding:90px 70px;
+  box-sizing:border-box;
+
+  background:
+    radial-gradient(circle at top,#4a3520 0%,transparent 38%),
+    #080808;
 }
 
+/* 🔥 WATERMARK (DOUBLE LAYER) */
 .watermark{
-  position:absolute;width:1450px;opacity:.045;top:50%;left:50%;
-  transform:translate(-50%,-50%);z-index:0;pointer-events:none;
+  position:absolute;
+  width:1100px;
+  opacity:.08;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index:0;
+  pointer-events:none;
 }
 
-.content{position:relative;z-index:2;text-align:center}
+.watermark.glow{
+  opacity:.05;
+  filter:blur(30px);
+  transform:translate(-50%, -50%) scale(1.2);
+}
 
+/* CONTENT ABOVE */
+.content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+}
+
+/* ELEMENTS */
 .hook{
-  display:inline-block;background:#d6b887;color:#111;
-  padding:18px 34px;border-radius:999px;
-  font-size:28px;font-weight:950;letter-spacing:1px;
-  max-width:850px;
+  display:inline-block;
+  padding:18px 34px;
+  border-radius:999px;
+  font-size:30px;
+  font-weight:950;
+  letter-spacing:2px;
+  background:#d6b887;
+  color:#111;
 }
 
 .title{
-  margin-top:115px;font-size:78px;font-weight:1000;
-  line-height:1.02;text-transform:uppercase;
-  max-width:940px;margin-left:auto;margin-right:auto;
-  word-break:normal;
+  margin-top:110px;
+  font-size:78px;
+  font-weight:1000;
+  line-height:1.02;
+  text-transform:uppercase;
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .subtitle{
-  margin-top:26px;font-size:38px;color:#d6b887;
+  margin-top:24px;
+  font-size:38px;
+  color:#d6b887;
 }
 
 .kcal-badge{
-  margin:110px auto 0 auto;width:560px;height:560px;border-radius:50%;
-  background:#d6b887;color:#111;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  box-shadow:0 0 90px rgba(214,184,135,.45);
+  margin:110px auto 0 auto;
+  width:560px;
+  height:560px;
+  border-radius:50%;
+  background:#d6b887;
+  color:#111;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:0 0 140px rgba(214,184,135,.6);
 }
 
-.kcal{font-size:145px;font-weight:1000;line-height:1}
-.kcal-label{font-size:42px;font-weight:950}
+.kcal{
+  font-size:140px;
+  font-weight:1000;
+}
+
+.kcal-label{
+  font-size:42px;
+  font-weight:950;
+}
 
 .macros{
-  margin-top:105px;display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:22px;
+  margin-top:100px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
 }
 
 .macro{
-  background:#151515;border:2px solid #3d3024;border-radius:999px;
-  padding:26px 8px;
+  background:#151515;
+  border:2px solid #3d3024;
+  border-radius:999px;
+  padding:26px;
 }
 
-.label{font-size:22px;font-weight:900;color:#d6b887}
-.value{font-size:42px;font-weight:1000;margin-top:8px}
+.label{
+  font-size:20px;
+  font-weight:900;
+  color:#d6b887;
+}
+
+.value{
+  font-size:42px;
+  font-weight:1000;
+  margin-top:6px;
+}
 
 .footer{
-  position:absolute;bottom:75px;left:0;right:0;text-align:center;
-  font-size:32px;font-weight:900;opacity:.7;z-index:2;
+  position:absolute;
+  bottom:70px;
+  width:100%;
+  text-align:center;
+  font-size:30px;
+  opacity:.7;
 }
 </style>
 </head>
@@ -82,7 +184,7 @@ button{background:#d6b887;color:#111;font-weight:900}
 <option value="reel">Reel Cover</option>
 </select>
 
-<input id="hook" placeholder="Hook">
+<input id="hook" placeholder="Hook (LOW CAL • HIGH PROTEIN)">
 <input id="name" placeholder="Name">
 <input id="subtitle" placeholder="Untertitel">
 <input id="kcal" placeholder="Kalorien">
@@ -103,44 +205,74 @@ button{background:#d6b887;color:#111;font-weight:900}
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
+/* PREVIEW SCALE */
 function resizePreview(){
-  const scale = Math.min((window.innerWidth-40)/1080, .55);
-  $("previewInner").style.transform = `scale(${scale})`;
-  $("previewInner").style.width = `${1080*scale}px`;
-  $("previewInner").style.height = `${1920*scale}px`;
+  const scale = Math.min(
+    (window.innerWidth - 40) / 1080,
+    (window.innerHeight - 40) / 1920,
+    0.55
+  );
+
+  const el = $("previewInner");
+  el.style.transform = `scale(${scale})`;
+  el.style.width = `${1080 * scale}px`;
+  el.style.height = `${1920 * scale}px`;
 }
 
+/* TITLE AUTO SIZE */
 function fitTitle(){
-  const t=document.querySelector(".title");
-  const l=t.innerText.length;
-  if(l>28)t.style.fontSize="54px";
-  else if(l>20)t.style.fontSize="64px";
-  else t.style.fontSize="78px";
+  const t = document.querySelector(".title");
+  const l = t.innerText.length;
+
+  if(l > 28) t.style.fontSize = "54px";
+  else if(l > 20) t.style.fontSize = "64px";
+  else t.style.fontSize = "78px";
 }
 
+/* RENDER */
 function render(){
-  const format=v("format");
-  $("card").innerHTML=`
+  const format = v("format");
+
+  $("card").innerHTML = `
+    <img src="logo.png" class="watermark glow">
     <img src="logo.png" class="watermark">
 
     <div class="content">
-      <div class="hook">${v("hook")||"LOW CAL • HIGH PROTEIN"}</div>
-      <div class="title">${v("name")||"MAXI KING BOWL"}</div>
-      <div class="subtitle">${v("subtitle")||"High Protein Dessert"}</div>
+      <div class="hook">${v("hook") || "LOW CAL • HIGH PROTEIN"}</div>
+
+      <div class="title">${v("name") || "MAXI KING BOWL"}</div>
+      <div class="subtitle">${v("subtitle") || "High Protein Dessert"}</div>
 
       <div class="kcal-badge">
-        <div class="kcal">${v("kcal")||"317"}</div>
+        <div class="kcal">${v("kcal") || "317"}</div>
         <div class="kcal-label">KCAL</div>
       </div>
 
       ${
-        format==="card" ? `
+        format === "card" ? `
         <div class="macros">
-          <div class="macro"><div class="label">PROTEIN</div><div class="value">${v("protein")||"34g"}</div></div>
-          <div class="macro"><div class="label">CARBS</div><div class="value">${v("carbs")||"16g"}</div></div>
-          <div class="macro"><div class="label">FETT</div><div class="value">${v("fat")||"11g"}</div></div>
-        </div>` :
-        `<div style="margin-top:100px;font-size:62px;font-weight:1000">${v("protein")||"34g"} PROTEIN</div>`
+          <div class="macro">
+            <div class="label">PROTEIN</div>
+            <div class="value">${v("protein") || "34g"}</div>
+          </div>
+
+          <div class="macro">
+            <div class="label">CARBS</div>
+            <div class="value">${v("carbs") || "16g"}</div>
+          </div>
+
+          <div class="macro">
+            <div class="label">FETT</div>
+            <div class="value">${v("fat") || "11g"}</div>
+          </div>
+        </div>
+        `
+        :
+        `
+        <div style="margin-top:100px;font-size:60px;font-weight:1000;">
+          ${v("protein") || "34g"} PROTEIN
+        </div>
+        `
       }
     </div>
 
@@ -151,21 +283,19 @@ function render(){
   resizePreview();
 }
 
+/* 🔥 FIXED EXPORT (NO BUGS) */
 function download(){
 
   render();
 
   const original = $("card");
 
-  // 🔥 CLONE OHNE SCALE
   const clone = original.cloneNode(true);
   clone.style.transform = "none";
   clone.style.width = "1080px";
   clone.style.height = "1920px";
-
   clone.style.position = "fixed";
   clone.style.left = "-9999px";
-  clone.style.top = "0";
 
   document.body.appendChild(clone);
 
@@ -179,11 +309,11 @@ function download(){
     link.href = canvas.toDataURL("image/png");
     link.click();
 
-    document.body.removeChild(clone); // cleanup
+    document.body.removeChild(clone);
   });
 }
 
-window.addEventListener("resize",resizePreview);
+window.addEventListener("resize", resizePreview);
 render();
 </script>
 
