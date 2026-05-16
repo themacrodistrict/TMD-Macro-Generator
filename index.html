@@ -63,27 +63,34 @@ button{background:#d6b887;color:#111;font-weight:900}
 .label{font-size:20px;font-weight:900;color:#d6b887}
 .value{font-size:42px;font-weight:1000;margin-top:6px}
 
+/* FOOTER */
 .footer{
   position:absolute;bottom:70px;left:0;width:100%;
   display:flex;justify-content:center;align-items:center;z-index:2;
 }
 
 .footer-inner{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  transform:translateX(-6px);
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  transform:translateX(-4px);
 }
 
 .icon{
-  width:20px;height:20px;fill:#d6b887;opacity:.85;
-  filter:drop-shadow(0 0 6px rgba(214,184,135,.35));
+  width:24px;height:24px;
+  fill:#d6b887;
+  opacity:.9;
+  filter:drop-shadow(0 0 8px rgba(214,184,135,.4));
 }
 
 .youtube{
-  width:24px;
-  height:24px;
+  width:26px;
+  height:26px;
 }
 
-.handle{font-size:28px;opacity:.8;margin-left:6px}
+.handle{
+  font-size:28px;
+  opacity:.9;
+  margin-left:8px;
+}
 </style>
 </head>
 
@@ -124,15 +131,6 @@ function resizePreview(){
   el.style.height = `${1920*scale}px`;
 }
 
-function fitTitle(){
-  const t = document.querySelector(".title");
-  if(!t) return;
-  const l = t.innerText.length;
-  if(l > 28) t.style.fontSize = "54px";
-  else if(l > 20) t.style.fontSize = "64px";
-  else t.style.fontSize = "78px";
-}
-
 function cleanFilename(name){
   return name.toLowerCase().trim()
     .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
@@ -141,8 +139,6 @@ function cleanFilename(name){
 }
 
 function render(){
-  const format = v("format");
-
   const hook = v("hook") ? `<div class="hook">${v("hook")}</div>` : "";
   const title = v("name") ? `<div class="title">${v("name")}</div>` : "";
   const subtitle = v("subtitle") ? `<div class="subtitle">${v("subtitle")}</div>` : "";
@@ -171,21 +167,35 @@ function render(){
       ${title}
       ${subtitle}
       ${kcalBox}
-      ${format === "card" ? macros : ""}
+      ${macros}
     </div>
 
     <div class="footer">
       <div class="footer-inner">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
-        <svg class="icon" viewBox="0 0 24 24"><path d="M14 3v10.2a3.8 3.8 0 11-3-3.7v2.1a1.7 1.7 0 102 1.6V3h1z"/></svg>
-        <svg class="icon youtube" viewBox="0 0 24 24"><path d="M21.6 7.2c-.2-.8-.8-1.4-1.6-1.6C18.6 5.2 12 5.2 12 5.2s-6.6 0-8 .4c-.8.2-1.4.8-1.6 1.6C2 8.6 2 12 2 12s0 3.4.4 4.8c.2.8.8 1.4 1.6 1.6 1.4.4 8 .4 8 .4s6.6 0 8-.4c.8-.2 1.4-.8 1.6-1.6.4-1.4.4-4.8.4-4.8s0-3.4-.4-4.8zM10 15.2V8.8l5.5 3.2L10 15.2z"/></svg>
+
+        <!-- Instagram -->
+        <svg class="icon" viewBox="0 0 24 24">
+          <rect x="4" y="4" width="16" height="16" rx="5"/>
+          <circle cx="12" cy="12" r="4" fill="#080808"/>
+          <circle cx="17" cy="7" r="1.5" fill="#080808"/>
+        </svg>
+
+        <!-- TikTok -->
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M14 3v9a4 4 0 11-3-3.87V10a2 2 0 102 1.73V3h1z"/>
+        </svg>
+
+        <!-- YouTube (fix) -->
+        <svg class="icon youtube" viewBox="0 0 24 24">
+          <rect x="2" y="6" width="20" height="12" rx="4" fill="#d6b887"/>
+          <polygon points="10,9 16,12 10,15" fill="#080808"/>
+        </svg>
+
         <span class="handle">@TheMacroDistrict</span>
+
       </div>
     </div>
   `;
-
-  fitTitle();
-  resizePreview();
 }
 
 function download(){
