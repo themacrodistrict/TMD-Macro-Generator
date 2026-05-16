@@ -7,200 +7,82 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
-body{
-  margin:0;
-  background:#080808;
-  color:white;
-  font-family:-apple-system,Arial;
-  padding:18px;
-}
+body{margin:0;background:#080808;color:white;font-family:-apple-system,Arial;padding:18px}
+input,button{width:100%;padding:14px;margin:7px 0;border-radius:14px;border:none;font-size:16px;box-sizing:border-box}
+button{background:#d6b887;color:#111;font-weight:900}
 
-input,select,button{
-  width:100%;
-  padding:14px;
-  margin:7px 0;
-  border-radius:14px;
-  border:none;
-  font-size:16px;
-  box-sizing:border-box;
-}
+.preview{width:100%;display:flex;justify-content:center;overflow:hidden;margin-top:20px}
+.preview-inner{width:1080px;height:1920px;transform-origin:top left}
 
-button{
-  background:#d6b887;
-  color:#111;
-  font-weight:900;
-}
-
-/* PREVIEW */
-.preview{
-  width:100%;
-  display:flex;
-  justify-content:center;
-  overflow:hidden;
-  margin-top:20px;
-}
-
-.preview-inner{
-  width:1080px;
-  height:1920px;
-  transform-origin:top left;
-}
-
-/* CARD */
 .card{
-  width:1080px;
-  height:1920px;
-  position:relative;
-  overflow:hidden;
-  padding:90px 70px;
-  box-sizing:border-box;
-
-  background:
-    radial-gradient(circle at top,#4a3520 0%,transparent 38%),
-    #080808;
+  width:1080px;height:1920px;position:relative;overflow:hidden;
+  padding:90px 70px;box-sizing:border-box;
+  background:radial-gradient(circle at top,#4a3520 0%,transparent 38%),#080808;
 }
 
-/* 🔥 FINAL WATERMARK */
 .watermark{
-  position:absolute;
-  width:1030px;
-  opacity:.095;
-  top:66%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  z-index:0;
-  pointer-events:none;
+  position:absolute;width:1080px;opacity:.095;top:71%;left:50%;
+  transform:translate(-50%,-50%);z-index:0;pointer-events:none;
   filter:brightness(1.12);
 }
 
-/* CONTENT */
-.content{
-  position:relative;
-  z-index:2;
-  text-align:center;
-}
+.content{position:relative;z-index:2;text-align:center}
 
 .hook{
-  display:inline-block;
-  padding:18px 34px;
-  border-radius:999px;
-  font-size:30px;
-  font-weight:950;
-  letter-spacing:2px;
-  background:#d6b887;
-  color:#111;
+  display:inline-block;padding:18px 34px;border-radius:999px;
+  font-size:30px;font-weight:950;letter-spacing:2px;
+  background:#d6b887;color:#111;
 }
 
 .title{
-  margin-top:90px;
-  font-size:78px;
-  font-weight:1000;
-  line-height:1.02;
-  text-transform:uppercase;
+  margin-top:90px;font-size:78px;font-weight:1000;
+  line-height:1.02;text-transform:uppercase;
 }
 
-.subtitle{
-  margin-top:24px;
-  font-size:42px;
-  color:#d6b887;
-  opacity:.95;
+.subtitle{margin-top:24px;font-size:42px;color:#d6b887;opacity:.95}
+
+.kcal-wrap{position:relative;margin-top:90px}
+
+.kcal-wrap::before{
+  content:"";position:absolute;width:760px;height:760px;border-radius:50%;
+  background:radial-gradient(circle,rgba(214,184,135,.32) 0%,rgba(214,184,135,.12) 38%,transparent 70%);
+  left:50%;top:50%;transform:translate(-50%,-50%);z-index:-1;
 }
 
 .kcal-badge{
-  margin:90px auto 0;
-  width:560px;
-  height:560px;
-  border-radius:50%;
-  background:#d6b887;
-  color:#111;
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
+  margin:0 auto;width:560px;height:560px;border-radius:50%;
+  background:#d6b887;color:#111;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   box-shadow:0 0 140px rgba(214,184,135,.6);
 }
 
-.kcal{
-  font-size:140px;
-  font-weight:1000;
-}
+.kcal{font-size:140px;font-weight:1000;line-height:1}
+.kcal-label{font-size:42px;font-weight:950;margin-top:8px}
+.portion{font-size:24px;font-weight:800;margin-top:10px;opacity:.7}
 
-.kcal-label{
-  font-size:42px;
-  font-weight:950;
-}
-
-.portion{
-  font-size:24px;
-  font-weight:800;
-  margin-top:10px;
-  opacity:.7;
-}
-
-/* 🔥 IMPROVED MACROS */
 .macros{
-  margin-top:75px;
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:22px;
+  margin-top:75px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;
 }
 
 .macro{
-  background:#151515;
-  border:2px solid #3d3024;
-  border-radius:999px;
-  padding:30px 26px;
+  background:#151515;border:2px solid #3d3024;
+  border-radius:999px;padding:30px 26px;
 }
 
-.label{
-  font-size:22px;
-  font-weight:900;
-  color:#d6b887;
-}
+.label{font-size:22px;font-weight:900;color:#d6b887}
+.value{font-size:48px;font-weight:1000;margin-top:6px}
 
-.value{
-  font-size:48px;
-  font-weight:1000;
-  margin-top:6px;
-}
-
-/* FOOTER */
 .footer{
-  position:absolute;
-  bottom:70px;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:2;
+  position:absolute;bottom:70px;left:0;width:100%;
+  display:flex;justify-content:center;align-items:center;z-index:2;
 }
 
-.footer-inner{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
+.footer-inner{display:flex;align-items:center;justify-content:center;gap:14px}
 
-.icon{
-  width:23px;
-  height:23px;
-  fill:#d6b887;
-  opacity:.8;
-}
+.icon{width:23px;height:23px;fill:#d6b887;opacity:.8}
+.youtube{width:26px;height:26px}
 
-.youtube{
-  width:26px;
-  height:26px;
-}
-
-.handle{
-  font-size:28px;
-  opacity:.95;
-  margin-left:10px;
-}
+.handle{font-size:28px;opacity:.95;margin-left:10px}
 </style>
 </head>
 
@@ -208,6 +90,7 @@ button{
 
 <input id="hook" placeholder="Hook">
 <input id="name" placeholder="Name">
+<input id="subtitle" placeholder="Untertitel">
 <input id="kcal" placeholder="Kalorien">
 <input id="portion" placeholder="z.B. pro Portion">
 <input id="protein" placeholder="Protein">
@@ -227,20 +110,33 @@ button{
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
+function resizePreview(){
+  const scale = Math.min((window.innerWidth-40)/1080,0.55);
+  const el = $("previewInner");
+  el.style.transform = `scale(${scale})`;
+  el.style.width = `${1080*scale}px`;
+  el.style.height = `${1920*scale}px`;
+}
+
 function cleanFilename(name){
-  return name.toLowerCase().replace(/[^a-z0-9]+/g,"-");
+  return name.toLowerCase().trim()
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"");
 }
 
 function render(){
-
   const hook = v("hook") ? `<div class="hook">${v("hook")}</div>` : "";
   const title = v("name") ? `<div class="title">${v("name")}</div>` : "";
+  const subtitle = v("subtitle") ? `<div class="subtitle">${v("subtitle")}</div>` : "";
 
   const kcalBox = v("kcal") ? `
-    <div class="kcal-badge">
-      <div class="kcal">${v("kcal")}</div>
-      <div class="kcal-label">KCAL</div>
-      ${v("portion") ? `<div class="portion">${v("portion")}</div>` : ""}
+    <div class="kcal-wrap">
+      <div class="kcal-badge">
+        <div class="kcal">${v("kcal")}</div>
+        <div class="kcal-label">KCAL</div>
+        ${v("portion") ? `<div class="portion">${v("portion")}</div>` : ""}
+      </div>
     </div>
   ` : "";
 
@@ -258,13 +154,13 @@ function render(){
     <div class="content">
       ${hook}
       ${title}
+      ${subtitle}
       ${kcalBox}
       ${macros}
     </div>
 
     <div class="footer">
       <div class="footer-inner">
-
         <svg class="icon" viewBox="0 0 24 24">
           <rect x="4" y="4" width="16" height="16" rx="5"/>
           <circle cx="12" cy="12" r="4" fill="#080808"/>
@@ -281,25 +177,33 @@ function render(){
         </svg>
 
         <span class="handle">@TheMacroDistrict</span>
-
       </div>
     </div>
   `;
+
+  resizePreview();
 }
 
 function download(){
   render();
 
-  const filename = cleanFilename(v("name") || "tmd") + ".png";
+  const clone = $("card").cloneNode(true);
+  clone.style.position = "fixed";
+  clone.style.left = "-9999px";
+  clone.style.width = "1080px";
+  clone.style.height = "1920px";
+  document.body.appendChild(clone);
 
-  html2canvas($("card"),{scale:2}).then(canvas=>{
+  html2canvas(clone,{scale:2,useCORS:true}).then(canvas=>{
     const link=document.createElement("a");
-    link.download = filename;
-    link.href = canvas.toDataURL();
+    link.download = cleanFilename(v("name") || "tmd-card") + ".png";
+    link.href = canvas.toDataURL("image/png");
     link.click();
+    document.body.removeChild(clone);
   });
 }
 
+window.addEventListener("resize",resizePreview);
 render();
 </script>
 
