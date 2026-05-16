@@ -23,6 +23,7 @@ input,select,button{
   border-radius:14px;
   border:none;
   font-size:16px;
+  box-sizing:border-box;
 }
 
 button{
@@ -60,25 +61,31 @@ button{
     #080808;
 }
 
-/* 🔥 WATERMARK (DOUBLE LAYER) */
+/* 🔥 WATERMARK CLEAN */
 .watermark{
   position:absolute;
-  width:1100px;
-  opacity:.08;
+  width:900px;
+  opacity:.07;
   top:50%;
   left:50%;
-  transform:translate(-50%, -50%);
+  transform:translate(-50%,-50%);
   z-index:0;
   pointer-events:none;
 }
 
-.watermark.glow{
-  opacity:.05;
-  filter:blur(30px);
-  transform:translate(-50%, -50%) scale(1.2);
+.watermark-glow{
+  position:absolute;
+  width:1100px;
+  opacity:.035;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(1.2);
+  filter:blur(40px);
+  z-index:0;
+  pointer-events:none;
 }
 
-/* CONTENT ABOVE */
+/* CONTENT */
 .content{
   position:relative;
   z-index:2;
@@ -103,9 +110,6 @@ button{
   font-weight:1000;
   line-height:1.02;
   text-transform:uppercase;
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
 }
 
 .subtitle{
@@ -115,7 +119,7 @@ button{
 }
 
 .kcal-badge{
-  margin:110px auto 0 auto;
+  margin:110px auto 0;
   width:560px;
   height:560px;
   border-radius:50%;
@@ -173,6 +177,7 @@ button{
   text-align:center;
   font-size:30px;
   opacity:.7;
+  z-index:2;
 }
 </style>
 </head>
@@ -205,7 +210,7 @@ button{
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
-/* PREVIEW SCALE */
+/* RESPONSIVE PREVIEW */
 function resizePreview(){
   const scale = Math.min(
     (window.innerWidth - 40) / 1080,
@@ -234,8 +239,8 @@ function render(){
   const format = v("format");
 
   $("card").innerHTML = `
-    <img src="logo.png" class="watermark glow">
-    <img src="logo.png" class="watermark">
+    <img src="watermark.png" class="watermark-glow">
+    <img src="watermark.png" class="watermark">
 
     <div class="content">
       <div class="hook">${v("hook") || "LOW CAL • HIGH PROTEIN"}</div>
@@ -251,20 +256,9 @@ function render(){
       ${
         format === "card" ? `
         <div class="macros">
-          <div class="macro">
-            <div class="label">PROTEIN</div>
-            <div class="value">${v("protein") || "34g"}</div>
-          </div>
-
-          <div class="macro">
-            <div class="label">CARBS</div>
-            <div class="value">${v("carbs") || "16g"}</div>
-          </div>
-
-          <div class="macro">
-            <div class="label">FETT</div>
-            <div class="value">${v("fat") || "11g"}</div>
-          </div>
+          <div class="macro"><div class="label">PROTEIN</div><div class="value">${v("protein") || "34g"}</div></div>
+          <div class="macro"><div class="label">CARBS</div><div class="value">${v("carbs") || "16g"}</div></div>
+          <div class="macro"><div class="label">FETT</div><div class="value">${v("fat") || "11g"}</div></div>
         </div>
         `
         :
@@ -283,14 +277,11 @@ function render(){
   resizePreview();
 }
 
-/* 🔥 FIXED EXPORT (NO BUGS) */
+/* EXPORT FIX */
 function download(){
-
   render();
 
-  const original = $("card");
-
-  const clone = original.cloneNode(true);
+  const clone = $("card").cloneNode(true);
   clone.style.transform = "none";
   clone.style.width = "1080px";
   clone.style.height = "1920px";
@@ -299,21 +290,20 @@ function download(){
 
   document.body.appendChild(clone);
 
-  html2canvas(clone, {
+  html2canvas(clone,{
     scale:2,
     useCORS:true,
     backgroundColor:null
   }).then(canvas=>{
-    const link = document.createElement("a");
-    link.download = "tmd.png";
-    link.href = canvas.toDataURL("image/png");
+    const link=document.createElement("a");
+    link.download="tmd-card.png";
+    link.href=canvas.toDataURL("image/png");
     link.click();
-
     document.body.removeChild(clone);
   });
 }
 
-window.addEventListener("resize", resizePreview);
+window.addEventListener("resize",resizePreview);
 render();
 </script>
 
