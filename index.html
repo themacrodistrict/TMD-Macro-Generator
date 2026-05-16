@@ -1,134 +1,51 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TMD Macro Generator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMD Macro Generator V2</title>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
 <style>
-body{margin:0;background:#0b0b0c;color:white;font-family:Arial;padding:20px}
-input,select,button{width:100%;padding:14px;margin:8px 0;border-radius:12px;border:0;font-size:16px}
-button{background:#d6b887;font-weight:800;cursor:pointer}
-.app{max-width:480px;margin:auto}
-
-/* 🔥 KEIN SCALE MEHR */
-.preview{
-width:100%;
-overflow:auto;
-}
-
-.card{
-width:1080px;
-height:1920px;
-box-sizing:border-box;
-position:relative;
-overflow:hidden;
-}
-
-.logo{
-width:210px;
-opacity:.18;
-margin-bottom:70px;
-display:block;
-margin-left:auto;
-margin-right:auto;
-}
-
-.center{text-align:center}
-
-.title{
-font-size:80px;
-font-weight:900;
-line-height:1.1;
-text-align:center;
-}
-
-.subtitle{
-font-size:36px;
-margin-top:20px;
-text-align:center;
-}
-
-.kcal{
-font-size:140px;
-font-weight:900;
-text-align:center;
-}
-
-.box{
-border-radius:55px;
-padding:60px;
-margin-top:80px;
-text-align:center;
-}
-
-.macros{
-display:block; /* 🔥 stabil statt flex */
-margin-top:60px;
-text-align:center;
-}
-
-.macro{
-margin-top:20px;
-}
-
-.label{
-font-size:24px;
-font-weight:800;
-}
-
-.value{
-font-size:52px;
-font-weight:900;
-margin-top:10px;
-}
-
-.extras{
-font-size:32px;
-margin-top:60px;
-text-align:center;
-}
-
-.footer{
-position:absolute;
-bottom:90px;
-left:0;
-right:0;
-text-align:center;
-font-size:30px;
-font-weight:800;
-}
+body{margin:0;background:#090909;color:white;font-family:-apple-system,Arial;padding:18px}
+.app{max-width:520px;margin:auto}
+h2{margin-bottom:10px}
+input,select,button{width:100%;box-sizing:border-box;padding:14px;margin:7px 0;border-radius:14px;border:none;font-size:16px}
+button{background:#d6b887;color:#111;font-weight:900}
+.preview{width:100%;overflow:auto;margin-top:18px}
+.card{width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;padding:90px}
+.logo{width:230px;display:block;margin:0 auto 70px auto;opacity:.45}
+.title{font-size:82px;font-weight:950;line-height:1.05;text-align:center}
+.subtitle{font-size:36px;text-align:center;margin-top:18px}
+.kcal-box{margin-top:85px;padding:62px;border-radius:55px;text-align:center}
+.kcal{font-size:145px;font-weight:950;line-height:1}
+.kcal-label{font-size:38px;margin-top:18px}
+.macros{margin-top:65px;text-align:center}
+.macro{margin-top:24px}
+.label{font-size:25px;font-weight:900;letter-spacing:1px}
+.value{font-size:54px;font-weight:950;margin-top:6px}
+.extras{margin-top:65px;font-size:32px;text-align:center}
+.footer{position:absolute;bottom:90px;left:0;right:0;text-align:center;font-size:30px;font-weight:900;opacity:.65}
 
 /* Designs */
-.luxury{background:#0d0d0e;color:white;padding:90px}
-.luxury .subtitle,.luxury .label{color:#d6b887}
-.luxury .box{border:4px solid #d6b887;background:#151515}
-.luxury .footer{color:#8d8277}
+.luxury{background:#0d0d0e;color:white}
+.luxury .subtitle,.luxury .label,.luxury .kcal-label{color:#d6b887}
+.luxury .kcal-box{border:4px solid #d6b887;background:#151515}
 
-.minimal{background:#f6f1e9;color:#111;padding:90px}
-.minimal .subtitle,.minimal .label,.minimal .footer{color:#9b7a52}
-.minimal .box{background:white;box-shadow:0 20px 50px rgba(0,0,0,.08)}
+.minimal{background:#f6f1e9;color:#111}
+.minimal .subtitle,.minimal .label,.minimal .kcal-label,.minimal .footer{color:#9b7a52}
+.minimal .kcal-box{background:white;box-shadow:0 20px 60px rgba(0,0,0,.10)}
 
-.social{background:#101010;color:white;padding:80px}
-.social-inner{
-height:1760px;
-background:#181818;
-border-radius:70px;
-padding:70px;
-box-sizing:border-box;
-border:2px solid #2c241c
-}
-.social .subtitle,.social .label{color:#d6b887}
-.social .box{background:#d6b887;color:#111}
-.social .footer{color:#8d8277}
+.social{background:#101010;color:white;padding:70px}
+.social-inner{height:100%;box-sizing:border-box;background:#181818;border-radius:75px;padding:80px;border:2px solid #2c241c}
+.social .subtitle,.social .label,.social .kcal-label{color:#d6b887}
+.social .kcal-box{background:#d6b887;color:#111}
+.social .kcal-label{color:#111}
 </style>
 </head>
 
 <body>
-
 <div class="app">
-<h1>TMD Macro Generator</h1>
+<h2>TMD Macro Generator V2</h2>
 
 <select id="design">
 <option value="luxury">Luxury Dark</option>
@@ -149,81 +66,84 @@ border:2px solid #2c241c
 <input id="fat" placeholder="Fett">
 <input id="extras" placeholder="Extras">
 
-<button onclick="render()">Vorschau</button>
-<button onclick="download()">Download PNG</button>
+<button onclick="render()">Vorschau aktualisieren</button>
+<button onclick="download()">PNG herunterladen</button>
 
 <div class="preview">
 <div id="card" class="card luxury"></div>
 </div>
-
 </div>
 
 <script>
-function val(id){return document.getElementById(id).value}
+const $ = id => document.getElementById(id);
+const v = id => $(id).value.trim();
+
+function fitTitle(){
+const title = document.querySelector(".title");
+const len = title.innerText.length;
+if(len > 26) title.style.fontSize = "58px";
+else if(len > 18) title.style.fontSize = "68px";
+else title.style.fontSize = "82px";
+}
 
 function render(){
- const design = val("design");
- const format = val("format");
- const card = document.getElementById("card");
+const design = v("design");
+const format = v("format");
+const card = $("card");
 
- card.className = "card " + design;
+card.className = "card " + design;
 
- const content = `
- ${design === "social" ? '<div class="social-inner">' : ''}
+card.innerHTML = `
+${design === "social" ? '<div class="social-inner">' : ''}
 
- <img src="logo.png" class="logo">
+<img src="logo.png" class="logo">
 
- <div class="title">${val("name") || "Rezeptname"}</div>
+<div class="title">${v("name") || "Rezeptname"}</div>
+<div class="subtitle">${v("subtitle") || "High Protein Dessert"}</div>
 
- <div class="subtitle">
- ${val("subtitle") || "High Protein Dessert"}
- </div>
+<div class="kcal-box">
+<div class="kcal">${v("kcal") || "300"}</div>
+<div class="kcal-label">kcal</div>
+</div>
 
- <div class="box">
- <div class="kcal">${val("kcal") || "317"}</div>
- <div class="subtitle">kcal</div>
- </div>
+${
+format === "card" ? `
+<div class="macros">
+<div class="macro"><div class="label">PROTEIN</div><div class="value">${v("protein") || "30g"}</div></div>
+<div class="macro"><div class="label">CARBS</div><div class="value">${v("carbs") || "20g"}</div></div>
+<div class="macro"><div class="label">FETT</div><div class="value">${v("fat") || "10g"}</div></div>
+</div>
+<div class="extras">${v("extras") || ""}</div>
+` : `
+<div class="extras" style="font-size:58px;font-weight:950;">
+${v("protein") || "30g"} Protein
+</div>
+`
+}
 
- ${
- format === "card" ? `
- <div class="macros">
- <div class="macro"><div class="label">PROTEIN</div><div class="value">${val("protein") || "34g"}</div></div>
- <div class="macro"><div class="label">CARBS</div><div class="value">${val("carbs") || "16,8g"}</div></div>
- <div class="macro"><div class="label">FETT</div><div class="value">${val("fat") || "11,7g"}</div></div>
- </div>
+<div class="footer">@TheMacroDistrict</div>
 
- <div class="extras">${val("extras") || ""}</div>
- ` : `
- <div class="extras" style="font-size:55px;font-weight:900;">
- ${val("protein") || "34g"} Protein
- </div>
- `
- }
+${design === "social" ? '</div>' : ''}
+`;
 
- <div class="footer">@TheMacroDistrict</div>
-
- ${design === "social" ? '</div>' : ''}
- `;
-
- card.innerHTML = content;
+fitTitle();
 }
 
 function download(){
- render();
- html2canvas(document.getElementById("card"), {
-   scale: 2, // 🔥 wichtig für sauberes Bild
-   useCORS: true,
-   backgroundColor: null
- }).then(canvas => {
-   const link = document.createElement("a");
-   link.download = "tmd-macro-card.png";
-   link.href = canvas.toDataURL("image/png");
-   link.click();
- });
+render();
+html2canvas($("card"), {
+scale:2,
+useCORS:true,
+backgroundColor:null
+}).then(canvas=>{
+const link = document.createElement("a");
+link.download = "tmd-macro-card.png";
+link.href = canvas.toDataURL("image/png");
+link.click();
+});
 }
 
 render();
 </script>
-
 </body>
 </html>
