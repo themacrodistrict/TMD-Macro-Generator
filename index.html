@@ -1,13 +1,10 @@
-<!-- V3 TMD Macro Generator -->
-<!-- Datei: index.html -->
-<!-- Logo muss heißen: logo.png -->
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMD Macro Generator V3</title>
+<title>TMD Generator V3</title>
+
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <style>
@@ -15,7 +12,7 @@ body{
   margin:0;
   background:#080808;
   color:white;
-  font-family:-apple-system,Arial,sans-serif;
+  font-family:-apple-system,Arial;
   padding:18px;
 }
 
@@ -23,7 +20,6 @@ body{
 
 input,select,button{
   width:100%;
-  box-sizing:border-box;
   padding:14px;
   margin:7px 0;
   border-radius:14px;
@@ -37,6 +33,7 @@ button{
   font-weight:900;
 }
 
+/* PREVIEW */
 .preview{
   width:100%;
   display:flex;
@@ -51,133 +48,128 @@ button{
   transform-origin:top left;
 }
 
+/* CARD */
 .card{
   width:1080px;
   height:1920px;
   position:relative;
   overflow:hidden;
-  box-sizing:border-box;
   padding:80px;
+  box-sizing:border-box;
 }
 
+/* 🔥 WATERMARK FULL SCREEN */
 .logo-bg{
   position:absolute;
-  width:760px;
-  opacity:.06;
-  top:260px;
-  left:160px;
+  width:1400px;
+  opacity:.05;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index:0;
+  pointer-events:none;
 }
 
-.logo{
-  width:190px;
-  display:block;
-  margin:0 auto 55px auto;
-  opacity:.75;
+/* ALLES DRÜBER */
+.card > *:not(.logo-bg){
+  position:relative;
+  z-index:2;
 }
 
+/* ELEMENTS */
 .hook{
   display:inline-block;
-  padding:18px 34px;
+  padding:16px 30px;
   border-radius:999px;
-  font-size:30px;
-  font-weight:950;
+  font-size:28px;
+  font-weight:900;
   letter-spacing:2px;
 }
 
 .title{
-  margin-top:95px;
+  margin-top:100px;
   font-size:96px;
   font-weight:1000;
-  line-height:.98;
   text-align:center;
-  text-transform:uppercase;
+  line-height:1;
 }
 
 .subtitle{
-  margin-top:24px;
-  font-size:38px;
+  margin-top:20px;
+  font-size:36px;
   text-align:center;
-  opacity:.85;
 }
 
 .kcal-badge{
   margin:120px auto 0 auto;
-  width:620px;
-  height:620px;
+  width:600px;
+  height:600px;
   border-radius:50%;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
+  flex-direction:column;
 }
 
 .kcal{
   font-size:160px;
   font-weight:1000;
-  line-height:1;
 }
 
 .kcal-label{
-  font-size:46px;
-  font-weight:950;
+  font-size:44px;
+  font-weight:900;
 }
 
 .macros{
-  margin-top:95px;
+  margin-top:90px;
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
-  gap:22px;
+  gap:20px;
 }
 
 .macro{
   border-radius:999px;
-  padding:28px 10px;
+  padding:25px;
   text-align:center;
 }
 
 .label{
-  font-size:22px;
+  font-size:20px;
   font-weight:900;
   opacity:.7;
 }
 
 .value{
-  margin-top:8px;
-  font-size:42px;
+  font-size:40px;
   font-weight:1000;
-}
-
-.extras{
-  margin-top:55px;
-  font-size:30px;
-  text-align:center;
-  opacity:.8;
 }
 
 .footer{
   position:absolute;
-  bottom:75px;
-  left:0;
-  right:0;
+  bottom:70px;
+  width:100%;
   text-align:center;
-  font-size:32px;
-  font-weight:950;
-  opacity:.75;
+  font-size:30px;
+  opacity:.7;
 }
 
-/* HERO GLOW */
+/* DESIGN HERO */
 .hero{
   background:
-    radial-gradient(circle at top,#4a3520 0%,transparent 36%),
-    radial-gradient(circle at center,#1e1e1e 0%,#080808 72%);
+    radial-gradient(circle at top,#4a3520 0%,transparent 40%),
+    #080808;
 }
 
-.hero .hook,
+.hero .hook{
+  background:#d6b887;
+  color:#111;
+}
+
 .hero .kcal-badge{
   background:#d6b887;
   color:#111;
-  box-shadow:0 0 90px rgba(214,184,135,.42);
+  box-shadow:0 0 100px rgba(214,184,135,.5);
 }
 
 .hero .macro{
@@ -189,60 +181,6 @@ button{
 .hero .label{
   color:#d6b887;
 }
-
-/* CREAM PREMIUM */
-.cream{
-  background:#f4eadc;
-  color:#111;
-}
-
-.cream .hook,
-.cream .kcal-badge{
-  background:#111;
-  color:#f4eadc;
-  box-shadow:0 25px 80px rgba(0,0,0,.18);
-}
-
-.cream .macro{
-  background:white;
-  color:#111;
-  box-shadow:0 16px 45px rgba(0,0,0,.1);
-}
-
-.cream .subtitle,
-.cream .label,
-.cream .footer{
-  color:#9b7a52;
-}
-
-/* NEON GOLD */
-.neon{
-  background:
-    linear-gradient(160deg,#090909,#18100a 55%,#090909);
-}
-
-.neon .hook{
-  background:transparent;
-  border:3px solid #d6b887;
-  color:#d6b887;
-  box-shadow:0 0 45px rgba(214,184,135,.35);
-}
-
-.neon .kcal-badge{
-  background:linear-gradient(145deg,#d6b887,#f2d9a4);
-  color:#111;
-  box-shadow:0 0 120px rgba(214,184,135,.6);
-}
-
-.neon .macro{
-  background:#111;
-  border:2px solid #d6b887;
-}
-
-.neon .subtitle,
-.neon .label{
-  color:#d6b887;
-}
 </style>
 </head>
 
@@ -250,12 +188,10 @@ button{
 
 <div class="app">
 
-<h2>TMD Generator V3</h2>
+<h2>TMD Generator</h2>
 
 <select id="design">
 <option value="hero">Hero Glow</option>
-<option value="cream">Cream Premium</option>
-<option value="neon">Neon Gold</option>
 </select>
 
 <select id="format">
@@ -263,14 +199,13 @@ button{
 <option value="reel">Reel Cover</option>
 </select>
 
-<input id="hook" placeholder="Hook z.B. LOW CAL • HIGH PROTEIN">
+<input id="hook" placeholder="Hook (LOW CAL • HIGH PROTEIN)">
 <input id="name" placeholder="Name">
 <input id="subtitle" placeholder="Untertitel">
 <input id="kcal" placeholder="Kalorien">
 <input id="protein" placeholder="Protein">
 <input id="carbs" placeholder="Carbs">
 <input id="fat" placeholder="Fett">
-<input id="extras" placeholder="Extras">
 
 <button onclick="render()">Vorschau</button>
 <button onclick="download()">Download PNG</button>
@@ -287,43 +222,39 @@ button{
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
+/* RESPONSIVE */
 function resizePreview(){
   const inner = $("previewInner");
 
-  const availableWidth = window.innerWidth - 40;
-  const availableHeight = window.innerHeight - 40;
-
   const scale = Math.min(
-    availableWidth / 1080,
-    availableHeight / 1920,
+    (window.innerWidth - 40) / 1080,
+    (window.innerHeight - 40) / 1920,
     0.55
   );
 
+  inner.style.transform = `scale(${scale})`;
   inner.style.width = `${1080 * scale}px`;
   inner.style.height = `${1920 * scale}px`;
-  inner.style.transform = `scale(${scale})`;
 }
 
+/* TITLE AUTO SIZE */
 function fitTitle(){
-  const title = document.querySelector(".title");
-  const len = title.innerText.length;
+  const t = document.querySelector(".title");
+  const l = t.innerText.length;
 
-  if(len > 30) title.style.fontSize = "60px";
-  else if(len > 22) title.style.fontSize = "72px";
-  else if(len > 15) title.style.fontSize = "84px";
-  else title.style.fontSize = "96px";
+  if(l > 28) t.style.fontSize = "60px";
+  else if(l > 20) t.style.fontSize = "75px";
+  else t.style.fontSize = "96px";
 }
 
+/* RENDER */
 function render(){
-  const design = v("design");
+
   const format = v("format");
   const card = $("card");
 
-  card.className = "card " + design;
-
   card.innerHTML = `
     <img src="logo.png" class="logo-bg">
-    <img src="logo.png" class="logo">
 
     <div style="text-align:center;">
       <div class="hook">${v("hook") || "LOW CAL • HIGH PROTEIN"}</div>
@@ -340,25 +271,15 @@ function render(){
     ${
       format === "card" ? `
       <div class="macros">
-        <div class="macro">
-          <div class="label">PROTEIN</div>
-          <div class="value">${v("protein") || "34g"}</div>
-        </div>
-        <div class="macro">
-          <div class="label">CARBS</div>
-          <div class="value">${v("carbs") || "16g"}</div>
-        </div>
-        <div class="macro">
-          <div class="label">FETT</div>
-          <div class="value">${v("fat") || "11g"}</div>
-        </div>
+        <div class="macro"><div class="label">PROTEIN</div><div class="value">${v("protein") || "34g"}</div></div>
+        <div class="macro"><div class="label">CARBS</div><div class="value">${v("carbs") || "16g"}</div></div>
+        <div class="macro"><div class="label">FETT</div><div class="value">${v("fat") || "11g"}</div></div>
       </div>
-      <div class="extras">${v("extras") || ""}</div>
       `
       :
       `
-      <div class="extras" style="font-size:60px;font-weight:1000;">
-        ${v("protein") || "34g"} Protein
+      <div style="margin-top:80px;text-align:center;font-size:60px;font-weight:1000;">
+        ${v("protein") || "34g"} PROTEIN
       </div>
       `
     }
@@ -370,17 +291,14 @@ function render(){
   resizePreview();
 }
 
+/* DOWNLOAD */
 function download(){
   render();
 
-  html2canvas($("card"), {
-    scale:2,
-    useCORS:true,
-    backgroundColor:null
-  }).then(canvas=>{
+  html2canvas($("card"), {scale:2}).then(canvas=>{
     const link = document.createElement("a");
-    link.download = "tmd-v3-card.png";
-    link.href = canvas.toDataURL("image/png");
+    link.download = "tmd.png";
+    link.href = canvas.toDataURL();
     link.click();
   });
 }
