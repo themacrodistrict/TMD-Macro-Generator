@@ -96,7 +96,7 @@ button{background:#d6b887;color:#111;font-weight:900}
 <input id="portion" placeholder="z.B. pro Portion">
 <input id="protein" placeholder="Protein">
 <input id="carbs" placeholder="Carbs">
-<input id="fat" placeholder="Fett">
+<input id="fat" placeholder="Fat">
 
 <button onclick="render()">Vorschau</button>
 <button onclick="download()">Download PNG</button>
@@ -128,6 +128,18 @@ function fitTitle(){
   else t.style.fontSize = "78px";
 }
 
+function cleanFilename(name){
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/ä/g,"ae")
+    .replace(/ö/g,"oe")
+    .replace(/ü/g,"ue")
+    .replace(/ß/g,"ss")
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"");
+}
+
 function render(){
   const format = v("format");
 
@@ -147,7 +159,7 @@ function render(){
     <div class="macros">
       ${v("protein") ? `<div class="macro"><div class="label">PROTEIN</div><div class="value">${v("protein")}</div></div>` : ""}
       ${v("carbs") ? `<div class="macro"><div class="label">CARBS</div><div class="value">${v("carbs")}</div></div>` : ""}
-      ${v("fat") ? `<div class="macro"><div class="label">FETT</div><div class="value">${v("fat")}</div></div>` : ""}
+      ${v("fat") ? `<div class="macro"><div class="label">FAT</div><div class="value">${v("fat")}</div></div>` : ""}
     </div>
   ` : "";
 
@@ -190,9 +202,12 @@ function download(){
 
   html2canvas(clone,{scale:2,useCORS:true}).then(canvas=>{
     const link=document.createElement("a");
-    link.download="tmd.png";
-    link.href=canvas.toDataURL();
+    const filename = v("name") ? cleanFilename(v("name")) + ".png" : "tmd-card.png";
+
+    link.download = filename;
+    link.href = canvas.toDataURL("image/png");
     link.click();
+
     document.body.removeChild(clone);
   });
 }
