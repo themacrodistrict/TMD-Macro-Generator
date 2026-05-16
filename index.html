@@ -198,6 +198,12 @@ button{
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
+function gram(id){
+  const value = v(id);
+  if(!value) return "";
+  return value.toLowerCase().includes("g") ? value : value + "g";
+}
+
 function resizePreview(){
   const scale = Math.min((window.innerWidth-40)/1080,0.55);
   const el = $("previewInner");
@@ -230,12 +236,12 @@ function render(){
   ` : "";
 
   const macros = (v("protein") || v("carbs") || v("fat")) ? `
-    <div class="macros">
-      ${v("protein") ? `<div class="macro"><div class="label">PROTEIN</div><div class="value">${v("protein")}</div></div>` : ""}
-      ${v("carbs") ? `<div class="macro"><div class="label">CARBS</div><div class="value">${v("carbs")}</div></div>` : ""}
-      ${v("fat") ? `<div class="macro"><div class="label">FAT</div><div class="value">${v("fat")}</div></div>` : ""}
-    </div>
-  ` : "";
+  <div class="macros">
+    ${v("protein") ? `<div class="macro"><div class="label">PROTEIN</div><div class="value">${gram("protein")}</div></div>` : ""}
+    ${v("carbs") ? `<div class="macro"><div class="label">CARBS</div><div class="value">${gram("carbs")}</div></div>` : ""}
+    ${v("fat") ? `<div class="macro"><div class="label">FAT</div><div class="value">${gram("fat")}</div></div>` : ""}
+  </div>
+` : "";
 
   $("card").innerHTML = `
     <img src="watermark.png" class="watermark">
