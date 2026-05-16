@@ -3,49 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TMD Macro Generator V2</title>
+<title>TMD Macro Generator</title>
+
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 <style>
-body{margin:0;background:#090909;color:white;font-family:-apple-system,Arial;padding:18px}
-.app{max-width:520px;margin:auto}
-h2{margin-bottom:10px}
-input,select,button{width:100%;box-sizing:border-box;padding:14px;margin:7px 0;border-radius:14px;border:none;font-size:16px}
-button{background:#d6b887;color:#111;font-weight:900}
-.preview{width:100%;overflow:auto;margin-top:18px}
-.card{width:1080px;height:1920px;box-sizing:border-box;position:relative;overflow:hidden;padding:90px}
-.logo{width:230px;display:block;margin:0 auto 70px auto;opacity:.45}
-.title{font-size:82px;font-weight:950;line-height:1.05;text-align:center}
-.subtitle{font-size:36px;text-align:center;margin-top:18px}
-.kcal-box{margin-top:85px;padding:62px;border-radius:55px;text-align:center}
-.kcal{font-size:145px;font-weight:950;line-height:1}
-.kcal-label{font-size:38px;margin-top:18px}
-.macros{margin-top:65px;text-align:center}
-.macro{margin-top:24px}
-.label{font-size:25px;font-weight:900;letter-spacing:1px}
-.value{font-size:54px;font-weight:950;margin-top:6px}
-.extras{margin-top:65px;font-size:32px;text-align:center}
-.footer{position:absolute;bottom:90px;left:0;right:0;text-align:center;font-size:30px;font-weight:900;opacity:.65}
+body{
+margin:0;
+background:#090909;
+color:white;
+font-family:-apple-system,Arial;
+padding:18px;
+}
 
-/* Designs */
-.luxury{background:#0d0d0e;color:white}
-.luxury .subtitle,.luxury .label,.luxury .kcal-label{color:#d6b887}
-.luxury .kcal-box{border:4px solid #d6b887;background:#151515}
+.app{
+max-width:520px;
+margin:auto;
+}
 
-.minimal{background:#f6f1e9;color:#111}
-.minimal .subtitle,.minimal .label,.minimal .kcal-label,.minimal .footer{color:#9b7a52}
-.minimal .kcal-box{background:white;box-shadow:0 20px 60px rgba(0,0,0,.10)}
+input,select,button{
+width:100%;
+padding:14px;
+margin:7px 0;
+border-radius:14px;
+border:none;
+font-size:16px;
+}
 
-.social{background:#101010;color:white;padding:70px}
-.social-inner{height:100%;box-sizing:border-box;background:#181818;border-radius:75px;padding:80px;border:2px solid #2c241c}
-.social .subtitle,.social .label,.social .kcal-label{color:#d6b887}
-.social .kcal-box{background:#d6b887;color:#111}
-.social .kcal-label{color:#111}
+button{
+background:#d6b887;
+color:#111;
+font-weight:900;
+}
+
+/* 🔥 RESPONSIVE PREVIEW */
+.preview{
+width:100%;
+display:flex;
+justify-content:center;
+margin-top:20px;
+}
+
+.preview-inner{
+width:1080px;
+height:1920px;
+transform-origin:top center;
+}
+
+/* CARD */
+.card{
+width:1080px;
+height:1920px;
+padding:90px;
+box-sizing:border-box;
+position:relative;
+overflow:hidden;
+}
+
+/* ELEMENTS */
+.logo{
+width:230px;
+display:block;
+margin:0 auto 70px auto;
+opacity:.5;
+}
+
+.title{
+font-size:82px;
+font-weight:950;
+text-align:center;
+}
+
+.subtitle{
+font-size:36px;
+text-align:center;
+margin-top:15px;
+}
+
+.kcal-box{
+margin-top:85px;
+padding:62px;
+border-radius:55px;
+text-align:center;
+}
+
+.kcal{
+font-size:145px;
+font-weight:950;
+}
+
+.kcal-label{
+font-size:38px;
+margin-top:10px;
+}
+
+.macros{
+margin-top:65px;
+text-align:center;
+}
+
+.macro{
+margin-top:22px;
+}
+
+.label{
+font-size:24px;
+font-weight:900;
+}
+
+.value{
+font-size:52px;
+font-weight:950;
+}
+
+.extras{
+margin-top:60px;
+font-size:32px;
+text-align:center;
+}
+
+.footer{
+position:absolute;
+bottom:90px;
+left:0;
+right:0;
+text-align:center;
+font-size:30px;
+font-weight:900;
+opacity:.6;
+}
+
+/* DESIGNS */
+.luxury{
+background:#0d0d0e;
+}
+.luxury .subtitle,.luxury .label,.luxury .kcal-label{
+color:#d6b887;
+}
+.luxury .kcal-box{
+border:4px solid #d6b887;
+background:#151515;
+}
+
+.minimal{
+background:#f6f1e9;
+color:#111;
+}
+.minimal .subtitle,.minimal .label,.minimal .kcal-label,.minimal .footer{
+color:#9b7a52;
+}
+.minimal .kcal-box{
+background:white;
+box-shadow:0 20px 60px rgba(0,0,0,.1);
+}
+
+.social{
+background:#101010;
+padding:70px;
+}
+.social-inner{
+background:#181818;
+border-radius:75px;
+padding:80px;
+height:100%;
+}
+.social .kcal-box{
+background:#d6b887;
+color:#111;
+}
+.social .kcal-label{
+color:#111;
+}
 </style>
 </head>
 
 <body>
+
 <div class="app">
-<h2>TMD Macro Generator V2</h2>
+
+<h2>TMD Generator</h2>
 
 <select id="design">
 <option value="luxury">Luxury Dark</option>
@@ -58,7 +194,7 @@ button{background:#d6b887;color:#111;font-weight:900}
 <option value="reel">Reel Cover</option>
 </select>
 
-<input id="name" placeholder="Name">
+<input id="name" placeholder="Rezeptname">
 <input id="subtitle" placeholder="Untertitel">
 <input id="kcal" placeholder="Kalorien">
 <input id="protein" placeholder="Protein">
@@ -66,27 +202,45 @@ button{background:#d6b887;color:#111;font-weight:900}
 <input id="fat" placeholder="Fett">
 <input id="extras" placeholder="Extras">
 
-<button onclick="render()">Vorschau aktualisieren</button>
-<button onclick="download()">PNG herunterladen</button>
+<button onclick="render()">Vorschau</button>
+<button onclick="download()">Download PNG</button>
 
 <div class="preview">
+<div class="preview-inner" id="previewInner">
 <div id="card" class="card luxury"></div>
 </div>
+</div>
+
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
 const v = id => $(id).value.trim();
 
+/* 🔥 AUTO TITLE SIZE */
 function fitTitle(){
-const title = document.querySelector(".title");
-const len = title.innerText.length;
-if(len > 26) title.style.fontSize = "58px";
-else if(len > 18) title.style.fontSize = "68px";
-else title.style.fontSize = "82px";
+const el = document.querySelector(".title");
+const len = el.innerText.length;
+
+if(len > 26) el.style.fontSize = "58px";
+else if(len > 18) el.style.fontSize = "68px";
+else el.style.fontSize = "82px";
 }
 
+/* 🔥 RESPONSIVE PREVIEW */
+function resizePreview(){
+const preview = document.querySelector(".preview");
+const inner = $("previewInner");
+
+const scale = Math.min(preview.clientWidth / 1080, 0.5);
+
+inner.style.transform = `scale(${scale})`;
+inner.style.height = `${1920 * scale}px`;
+}
+
+/* RENDER */
 function render(){
+
 const design = v("design");
 const format = v("format");
 const card = $("card");
@@ -114,7 +268,9 @@ format === "card" ? `
 <div class="macro"><div class="label">FETT</div><div class="value">${v("fat") || "10g"}</div></div>
 </div>
 <div class="extras">${v("extras") || ""}</div>
-` : `
+`
+:
+`
 <div class="extras" style="font-size:58px;font-weight:950;">
 ${v("protein") || "30g"} Protein
 </div>
@@ -127,23 +283,28 @@ ${design === "social" ? '</div>' : ''}
 `;
 
 fitTitle();
+resizePreview();
 }
 
+/* DOWNLOAD */
 function download(){
 render();
+
 html2canvas($("card"), {
 scale:2,
-useCORS:true,
-backgroundColor:null
+useCORS:true
 }).then(canvas=>{
 const link = document.createElement("a");
-link.download = "tmd-macro-card.png";
+link.download = "tmd-card.png";
 link.href = canvas.toDataURL("image/png");
 link.click();
 });
 }
 
+window.addEventListener("resize", resizePreview);
+
 render();
 </script>
+
 </body>
 </html>
