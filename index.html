@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TMD Generator</title>
+
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<!-- MONTSERRAT FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -12,7 +16,7 @@ body{
   margin:0;
   background:#080808;
   color:white;
-  font-family:-apple-system,Arial;
+  font-family:'Montserrat', sans-serif;
   padding:18px
 }
 
@@ -23,13 +27,14 @@ input,button{
   border-radius:14px;
   border:none;
   font-size:16px;
-  box-sizing:border-box
+  box-sizing:border-box;
+  font-family:'Montserrat', sans-serif;
 }
 
 button{
   background:#d6b887;
   color:#111;
-  font-weight:900
+  font-weight:900;
 }
 
 .preview{
@@ -39,6 +44,7 @@ button{
   overflow:hidden;
   margin-top:20px
 }
+
 .preview-inner{
   width:1080px;
   height:1920px;
@@ -46,33 +52,66 @@ button{
 }
 
 .card{
-  width:1080px;height:1920px;position:relative;overflow:hidden;
-  padding:90px 70px;box-sizing:border-box;
-  background:radial-gradient(circle at top,#4a3520 0%,transparent 38%),#080808;
+  width:1080px;
+  height:1920px;
+  position:relative;
+  overflow:hidden;
+  padding:90px 70px;
+  box-sizing:border-box;
+  background:
+    radial-gradient(circle at top,#4a3520 0%,transparent 38%),
+    #080808;
 }
 
 .watermark{
-  position:absolute;width:1080px;opacity:.085;top:75%;left:50%;
-  transform:translate(-50%,-50%);z-index:0;pointer-events:none;
+  position:absolute;
+  width:1080px;
+  opacity:.085;
+  top:75%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  z-index:0;
+  pointer-events:none;
   filter:brightness(1.12);
 }
 
-.content{position:relative;z-index:2;text-align:center}
+.content{
+  position:relative;
+  z-index:2;
+  text-align:center
+}
 
 .hook{
-  display:inline-block;padding:18px 34px;border-radius:999px;
-  font-size:30px;font-weight:950;letter-spacing:2px;
-  background:#d6b887;color:#111;
+  display:inline-block;
+  padding:18px 34px;
+  border-radius:999px;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:2px;
+  background:#d6b887;
+  color:#111;
 }
 
 .title{
-  margin-top:90px;font-size:78px;font-weight:1000;
-  line-height:1.02;text-transform:uppercase;
+  margin-top:90px;
+  font-size:78px;
+  font-weight:900;
+  line-height:1.02;
+  text-transform:uppercase;
 }
 
-.subtitle{margin-top:24px;font-size:42px;color:#d6b887;opacity:.95}
+.subtitle{
+  margin-top:24px;
+  font-size:42px;
+  font-weight:600;
+  color:#d6b887;
+  opacity:.95
+}
 
-.kcal-wrap{position:relative;margin-top:90px}
+.kcal-wrap{
+  position:relative;
+  margin-top:90px
+}
 
 .kcal-glow{
   position:absolute;
@@ -94,16 +133,38 @@ button{
 }
 
 .kcal-badge{
-  position:relative;z-index:1;
-  margin:0 auto;width:540px;height:540px;border-radius:50%;
-  background:#d6b887;color:#111;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  z-index:1;
+  margin:0 auto;
+  width:540px;
+  height:540px;
+  border-radius:50%;
+  background:#d6b887;
+  color:#111;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   box-shadow:0 0 140px rgba(214,184,135,.6);
 }
 
-.kcal{font-size:140px;font-weight:1000;line-height:1}
-.kcal-label{font-size:42px;font-weight:950;margin-top:8px}
-.portion{font-size:26px;font-weight:800;margin-top:48px}
+.kcal{
+  font-size:140px;
+  font-weight:900;
+  line-height:1;
+}
+
+.kcal-label{
+  font-size:42px;
+  font-weight:800;
+  margin-top:8px
+}
+
+.portion{
+  font-size:26px;
+  font-weight:600;
+  margin-top:48px
+}
 
 .macros{
   margin-top:75px;
@@ -113,7 +174,7 @@ button{
 }
 
 .macro{
-  background:(18,18,18,.92);
+  background:rgba(18,18,18,.92);
   border:2px solid rgba(214,184,135,.29);
   border-radius:999px;
   padding:28px 22px;
@@ -122,7 +183,7 @@ button{
 
 .label{
   font-size:19px;
-  font-weight:850;
+  font-weight:700;
   color:#d6b887;
   opacity:.9;
   letter-spacing:.8px;
@@ -130,7 +191,7 @@ button{
 
 .value{
   font-size:48px;
-  font-weight:1000;
+  font-weight:900;
   margin-top:7px;
   line-height:1;
 }
@@ -149,7 +210,8 @@ button{
 .footer-inner{
   display:flex;
   align-items:center;
-  justify-content:center;gap:14px
+  justify-content:center;
+  gap:14px
 }
 
 .icon{
@@ -158,6 +220,7 @@ button{
   fill:#d6b887;
   opacity:.8
 }
+
 .youtube{
   width:26px;
   height:26px
@@ -165,6 +228,7 @@ button{
 
 .handle{
   font-size:28px;
+  font-weight:600;
   opacity:.80;
   margin-left:10px
 }
