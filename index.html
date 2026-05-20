@@ -52,23 +52,61 @@ button{
 }
 
 .card{
+
   width:1080px;
+
   height:1920px;
+
   position:relative;
+
   overflow:hidden;
+
   padding:90px 70px;
+
   box-sizing:border-box;
 
   background:
+
+    /* MAIN TOP GLOW */
+
     radial-gradient(
-      circle at top,
-      rgba(214,184,135,.14) 0%,
-      rgba(214,184,135,.09) 12%,
-      rgba(214,184,135,.05) 24%,
-      rgba(214,184,135,.025) 38%,
-      rgba(214,184,135,.01) 52%,
-      transparent 72%
+
+      circle at 50% -10%,
+
+      rgba(214,184,135,.10) 0%,
+
+      rgba(214,184,135,.06) 18%,
+
+      rgba(214,184,135,.03) 32%,
+
+      transparent 55%
+
     ),
+
+    /* SECOND SOFT GLOW */
+
+    radial-gradient(
+
+      circle at 50% 0%,
+
+      rgba(214,184,135,.04) 0%,
+
+      transparent 45%
+
+    ),
+
+    /* SUBTLE CINEMATIC HAZE */
+
+    linear-gradient(
+
+      180deg,
+
+      rgba(255,255,255,.015) 0%,
+
+      rgba(255,255,255,0) 25%
+
+    ),
+
     #080808;
 }
 
