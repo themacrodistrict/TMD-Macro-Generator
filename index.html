@@ -426,7 +426,8 @@ const v = id => $(id).value.trim();
 function gram(id){
   const value = v(id);
   if(!value) return "";
-  return value.toLowerCase().includes("g") ? value : value + "g";
+  const cleaned = value.replace(/g/gi,"").trim();
+  return `${cleaned}<span class="unit"> g</span>`;
 }
 
 function resizePreview(){
