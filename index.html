@@ -58,8 +58,17 @@ button{
   overflow:hidden;
   padding:90px 70px;
   box-sizing:border-box;
+
   background:
-    radial-gradient(circle at top,#4a3520 0%,transparent 38%),
+    radial-gradient(
+      circle at top,
+      rgba(214,184,135,.14) 0%,
+      rgba(214,184,135,.09) 12%,
+      rgba(214,184,135,.05) 24%,
+      rgba(214,184,135,.025) 38%,
+      rgba(214,184,135,.01) 52%,
+      transparent 72%
+    ),
     #080808;
 }
 
@@ -118,13 +127,22 @@ button{
   width:720px;
   height:720px;
   border-radius:50%;
-  background:radial-gradient(circle,
-    rgba(214,184,135,.22) 0%,
-    rgba(214,184,135,.12) 25%,
-    rgba(214,184,135,.06) 45%,
-    rgba(214,184,135,.02) 60%,
-    transparent 75%
-  );
+  background:
+    radial-gradient(circle,
+      rgba(214,184,135,.16) 0%,
+      rgba(214,184,135,.13) 12%,
+      rgba(214,184,135,.10) 22%,
+      rgba(214,184,135,.08) 32%,
+      rgba(214,184,135,.06) 42%,
+      rgba(214,184,135,.045) 52%,
+      rgba(214,184,135,.03) 62%,
+      rgba(214,184,135,.018) 72%,
+      rgba(214,184,135,.01) 82%,
+      transparent 100%
+    );
+
+  filter: blur(12px);
+
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
